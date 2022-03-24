@@ -19,16 +19,12 @@ public class BankController {
 		PreparedStatement pstmt;
 		ResultSet rs;
 		Connection conn = Utils.createConnection();
-		//Client client = ctx.bodyAsClass(Client.class);
 		String selectAllClient = "select * from bank";
-		
-		
+
 		try { pstmt = conn.prepareStatement(selectAllClient);
 				rs = pstmt.executeQuery();
-				
 				ArrayList<Client> cList = new ArrayList<Client>();
 				Client c;
-				
 				while(rs.next()) {
 					int id = rs.getInt("client_id");
 					String name = rs.getString("Client_Name");
@@ -37,7 +33,6 @@ public class BankController {
 					c = new Client(id, name,account,balance);
 					cList.add(c);
 				}
-				
 				rs.close();
 				pstmt.close();
 				ctx.json(cList);
@@ -46,7 +41,6 @@ public class BankController {
 				} catch (SQLException e) 
 			{
 					e.printStackTrace();
-			
 			}
 		
 	};
@@ -58,16 +52,13 @@ public class BankController {
 		//Client client = ctx.bodyAsClass(Client.class);
 		String selectOneClient = "select * from bank where client_id=?";
 		
-		
 		try { 
 			int client_id =Integer.parseInt(ctx.pathParam("client_id"));
 			pstmt = conn.prepareStatement(selectOneClient);
 			pstmt.setInt(1,client_id);
 			rs = pstmt.executeQuery();
-				
 				ArrayList<Client> cList = new ArrayList<Client>();
 				Client c;
-				
 				while(rs.next()) {
 					client_id= rs.getInt("client_id");
 					String name = rs.getString("Client_Name");
@@ -86,9 +77,7 @@ public class BankController {
 			{
 					e.printStackTrace();
 					ctx.status(404);
-			
 			}
-		
 	};
 	
 	public static Handler postClient = ctx -> {
@@ -98,7 +87,6 @@ public class BankController {
 		Connection conn = Utils.createConnection();
 		pstmt = conn.prepareStatement("insert into bank values(?,?,?,?)");
 		
-		
 		try { 
 			pstmt.setInt(1,c1.getId());
 			pstmt.setString(2, c1.getName());
@@ -107,13 +95,29 @@ public class BankController {
 			pstmt.execute();
 			ctx.status(201);
 			pstmt.close();
-		
 				} catch (SQLException e) 
 			{
 					e.printStackTrace();
-			
 			}
+	};
+	
+	public static Handler postClientAccount = ctx -> {
+		Client c1 = ctx.bodyAsClass(Client.class);
+		PreparedStatement pstmt;
+		ResultSet rs;
+		Connection conn = Utils.createConnection();
+		pstmt = conn.prepareStatement("insert into bank values(?)");
 		
+		try { 
+			int client_id =Integer.parseInt(ctx.pathParam("client_id"));
+			pstmt.setInt(1,client_id);
+			pstmt.execute();
+			ctx.status(201);
+			pstmt.close();
+				} catch (SQLException e) 
+			{
+					e.printStackTrace();
+			}
 	};
 	
 	public static Handler updateClient = ctx -> {
@@ -124,28 +128,22 @@ public class BankController {
 		Connection conn = Utils.createConnection();
 		pstmt = conn.prepareStatement("update bank set client_name=?, account_number=?,balance=? where client_id=?");
 		
-		
 		try { 
-			pstmt.setInt(4,c1.getId());
+			pstmt.setInt(4,client_id);
 			pstmt.setString(1, c1.getName());
 			pstmt.setInt(2, c1.getAccount());
 			pstmt.setInt(3, c1.getBalance());
 			pstmt.execute();
-			
 			pstmt.close();
-		
 				} catch (SQLException e) 
 			{
 					e.printStackTrace();
 					ctx.status(404);
-			
 			}
-		
 	};
 	public static Handler deleteOneClient = ctx -> {
 		Client c1 = ctx.bodyAsClass(Client.class);
 		PreparedStatement pstmt;
-		//ResultSet rs;
 		Connection conn = Utils.createConnection();
 		pstmt = conn.prepareStatement("delete from bank where client_id=?");
 		
@@ -153,19 +151,15 @@ public class BankController {
 			int client_id =Integer.parseInt(ctx.pathParam("client_id"));
 			pstmt.setInt(1,client_id);
 			pstmt.execute();
-			
 			pstmt.close();
 			ctx.status(205);
-		
 				} catch (SQLException e) 
 			{
 					e.printStackTrace();
 					ctx.status(404);
-			
 			}
-
-		
-		
 	};
+	
+	
 	
 }
