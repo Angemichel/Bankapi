@@ -5,9 +5,13 @@ public class Client {
 	private String name;
 	private int account;
 	private int balance;
+	//private int real_id;
 	
 	
 	
+	public int getId() {
+		return id;
+	}
 	public Client() {
 		super();
 	}
@@ -17,9 +21,6 @@ public class Client {
 		this.name = name;
 		this.account = account;
 		this.balance = balance;
-	}
-	public int getId() {
-		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
@@ -41,10 +42,6 @@ public class Client {
 	}
 	public void setBalance(int balance) {
 		this.balance = balance;
-	}
-	@Override
-	public String toString() {
-		return "Client [id=" + id + ", name=" + name + ", account=" + account + ", balance=" + balance + "]";
 	}
 	
 	
