@@ -56,10 +56,11 @@ public class BankController {
 	};
 
 	public static Handler getClientsAccount = ctx -> {
+		//int real_id =Integer.parseInt(ctx.pathParam("real_id"));
 		PreparedStatement pstmt;
 		ResultSet rs;
 		Connection conn = Utils.createConnection();
-		//Client client = ctx.bodyAsClass(Client.class);
+		Client client = ctx.bodyAsClass(Client.class);
 		String selectOneClient = "select * from bank where real_id=?";
 		
 		try { 
@@ -88,19 +89,28 @@ public class BankController {
 					e.printStackTrace();
 					ctx.status(404);
 			}
+			
 		
 		
 	};
 	
 	public static Handler getOneClient = ctx -> {
-		PreparedStatement pstmt;
+		
+		
+		int client_id =Integer.parseInt(ctx.pathParam("client_id"));
+		ArrayList<Client> cList = new ArrayList<Client>();
+		
+		cList = service.getOneClient(client_id);
+		
+		/*PreparedStatement pstmt;
 		ResultSet rs;
 		Connection conn = Utils.createConnection();
 		//Client client = ctx.bodyAsClass(Client.class);
 		String selectOneClient = "select * from bank where client_id=?";
 		
+		
 		try { 
-			int client_id =Integer.parseInt(ctx.pathParam("client_id"));
+			//int client_id =Integer.parseInt(ctx.pathParam("client_id"));
 			pstmt = conn.prepareStatement(selectOneClient);
 			pstmt.setInt(1,client_id);
 			rs = pstmt.executeQuery();
@@ -125,12 +135,18 @@ public class BankController {
 					e.printStackTrace();
 					ctx.status(404);
 			}
+		*/
+		
+		ctx.json(cList);
+		ctx.status(200);
 	};
 	
 	public static Handler postClient = ctx -> {
 		Client c1 = ctx.bodyAsClass(Client.class);
+		service.postOneClient(c1);
+		/*
 		PreparedStatement pstmt;
-		ResultSet rs;
+		//ResultSet rs;
 		Connection conn = Utils.createConnection();
 		pstmt = conn.prepareStatement("insert into bank values(?,?,?,?,?)");
 		
@@ -147,6 +163,8 @@ public class BankController {
 			{
 					e.printStackTrace();
 			}
+			*/
+		ctx.status(201);
 	};
 	
 	public static Handler postClientAccount = ctx -> {
@@ -175,6 +193,10 @@ public class BankController {
 	public static Handler updateClient = ctx -> {
 		Client c1 = ctx.bodyAsClass(Client.class);
 		int client_id = Integer.parseInt(ctx.pathParam("client_id"));
+		service.updateClient(client_id, c1);
+		/*
+		 int client_id = Integer.parseInt(ctx.pathParam("client_id"));
+		 
 		PreparedStatement pstmt;
 		//ResultSet rs;
 		Connection conn = Utils.createConnection();
@@ -194,9 +216,14 @@ public class BankController {
 					e.printStackTrace();
 					ctx.status(404);
 			}
+			*/
 	};
 	public static Handler deleteOneClient = ctx -> {
 		Client c1 = ctx.bodyAsClass(Client.class);
+		int client_id = Integer.parseInt(ctx.pathParam("client_id"));
+		service.deleteOneClient(client_id);
+		
+		/*
 		PreparedStatement pstmt;
 		Connection conn = Utils.createConnection();
 		pstmt = conn.prepareStatement("delete from bank where client_id=?");
@@ -212,8 +239,8 @@ public class BankController {
 					e.printStackTrace();
 					ctx.status(404);
 			}
+		*/
+		ctx.status(205);
 	};
-	
-	
 	
 }

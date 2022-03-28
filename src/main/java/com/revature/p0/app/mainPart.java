@@ -17,6 +17,7 @@ public class mainPart {
 		app.post("/clients/{client_id}/accounts", BankController.postClientAccount);
 		
 		app.put("/clients/{client_id}", BankController.updateClient);
+		
 		app.delete("/clients/{client_id}", BankController.deleteOneClient);
 		
 	}
