@@ -22,9 +22,9 @@ public class BankService implements BankServiceInt{
 		return dao.getOneClient(real_id);
 	}
 	@Override
-	public Client postOneClient(Client c1) {
+	public Client postClient(Client c1) {
 		// TODO Auto-generated method stub
-		return dao.postOneClient(c1);
+		return dao.postClient(c1);
 	}
 	
 	@Override
@@ -36,6 +36,17 @@ public class BankService implements BankServiceInt{
 	public Client deleteOneClient(int client_id) {
 		// TODO Auto-generated method stub
 		return dao.deleteOneClient(client_id);
+	}
+	@Override
+	public Client postClientAccount(int client_id, Client c1) {
+		// TODO Auto-generated method stub
+		return dao.postClientAccount(client_id, c1);
+	}
+	
+	@Override
+	public ArrayList<Client> getClientsAccount(int real_id) {
+		// TODO Auto-generated method stub
+		return dao.getClientsAccount(real_id);
 	}
 	
 	

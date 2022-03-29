@@ -8,7 +8,8 @@ public class mainPart {
 	public static void main(String[] args) {
 		Javalin app = Javalin.create().start();
 		
-		app.get("/", ctx->{ctx.result("Hello World");});
+		app.get("/", ctx->{ctx.result("Bank API");});
+		
 		app.get("/clients", BankController.getAllClients);
 		app.get("/clients/{client_id}", BankController.getOneClient);
 		app.get("/clients/{real_id}/accounts", BankController.getClientsAccount);

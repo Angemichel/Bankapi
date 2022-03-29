@@ -88,7 +88,7 @@ public class BankDao implements BankDaoInt {
 	}
 
 	@Override
-	public Client postOneClient(Client c1) {
+	public Client postClient(Client c1) {
 		// TODO Auto-generated method stub
 		//Client c1 = new Client(Client.class);
 		PreparedStatement pstmt;
@@ -98,6 +98,7 @@ public class BankDao implements BankDaoInt {
 		try { 
 			pstmt = conn.prepareStatement("insert into bank values(?,?,?,?,?)");
 			pstmt.setInt(1,c1.getId());
+			//pstmt.setInt(1,100);
 			pstmt.setString(2, c1.getName());
 			pstmt.setInt(3, c1.getAccount());
 			pstmt.setInt(4, c1.getBalance());
@@ -157,6 +158,69 @@ public class BankDao implements BankDaoInt {
 					
 			}
 		return null;
+	}
+
+	@Override
+	public Client postClientAccount(int client_id, Client c1) {
+		// TODO Auto-generated method stub
+		
+		
+		PreparedStatement pstmt;
+		ResultSet rs;
+		Connection conn = Utils.createConnection();
+		
+		
+		try { 
+			pstmt = conn.prepareStatement("insert into bank values(?,?,?,?,?)");
+			pstmt.setInt(1,client_id);
+			pstmt.setString(2, c1.getName());
+			pstmt.setInt(3, c1.getAccount());
+			pstmt.setInt(4, c1.getBalance());
+			pstmt.setInt(5,client_id);
+			pstmt.execute();
+			//ctx.status(201);
+			pstmt.close();
+				} catch (SQLException e) 
+			{
+					e.printStackTrace();
+			}
+		return null;
+	}
+
+	@Override
+	public ArrayList<Client> getClientsAccount(int real_id) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt;
+		ResultSet rs;
+		Connection conn = Utils.createConnection();
+		
+		String selectOneClient = "select * from bank where real_id=?";
+		ArrayList<Client> cList = new ArrayList<Client>();
+		Client c;
+		try { 
+			pstmt = conn.prepareStatement(selectOneClient);
+			pstmt.setInt(1,real_id);
+			rs = pstmt.executeQuery();
+				while(rs.next()) {
+					real_id= rs.getInt("real_id");
+					String name = rs.getString("Client_Name");
+					int account = rs.getInt("account_number");
+					int balance = rs.getInt("balance");
+					c = new Client(real_id, name,account,balance);
+					cList.add(c);
+				}
+				
+				rs.close();
+				pstmt.close();
+				//ctx.json(cList);
+				//ctx.status(200);
+		
+				} catch (SQLException e) 
+			{
+					e.printStackTrace();
+					//ctx.status(404);
+			}
+		return cList;
 	}
 
 }

@@ -53,10 +53,18 @@ public class BankController {
 			*/
 		List<Client> cList = service.getAllClients();
 		ctx.json(cList);
+		ctx.status(200);
 	};
 
 	public static Handler getClientsAccount = ctx -> {
 		//int real_id =Integer.parseInt(ctx.pathParam("real_id"));
+		
+		int real_id =Integer.parseInt(ctx.pathParam("real_id"));
+		ArrayList<Client> cList = new ArrayList<Client>();
+		
+		cList = service.getClientsAccount(real_id);
+		
+		/*
 		PreparedStatement pstmt;
 		ResultSet rs;
 		Connection conn = Utils.createConnection();
@@ -89,9 +97,10 @@ public class BankController {
 					e.printStackTrace();
 					ctx.status(404);
 			}
+			*/
+		ctx.json(cList);
+		ctx.status(200);
 			
-		
-		
 	};
 	
 	public static Handler getOneClient = ctx -> {
@@ -143,7 +152,7 @@ public class BankController {
 	
 	public static Handler postClient = ctx -> {
 		Client c1 = ctx.bodyAsClass(Client.class);
-		service.postOneClient(c1);
+		service.postClient(c1);
 		/*
 		PreparedStatement pstmt;
 		//ResultSet rs;
@@ -169,12 +178,14 @@ public class BankController {
 	
 	public static Handler postClientAccount = ctx -> {
 		Client c1 = ctx.bodyAsClass(Client.class);
+		int client_id =Integer.parseInt(ctx.pathParam("client_id"));
+		service.postClientAccount(client_id, c1);
+		/*
+		try { 
 		PreparedStatement pstmt;
 		ResultSet rs;
 		Connection conn = Utils.createConnection();
 		pstmt = conn.prepareStatement("insert into bank values(?,?,?,?,?)");
-		
-		try { 
 			int client_id =Integer.parseInt(ctx.pathParam("client_id"));
 			pstmt.setInt(1,client_id);
 			pstmt.setString(2, c1.getName());
@@ -188,6 +199,8 @@ public class BankController {
 			{
 					e.printStackTrace();
 			}
+		*/
+		ctx.status(201);
 	};
 	
 	public static Handler updateClient = ctx -> {
