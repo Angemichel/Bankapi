@@ -106,10 +106,10 @@ public class BankController {
 	public static Handler getOneClient = ctx -> {
 		
 		
-		int client_id =Integer.parseInt(ctx.pathParam("client_id"));
+		int real_id =Integer.parseInt(ctx.pathParam("real_id"));
 		ArrayList<Client> cList = new ArrayList<Client>();
 		
-		cList = service.getOneClient(client_id);
+		cList = service.getOneClient(real_id);
 		
 		/*PreparedStatement pstmt;
 		ResultSet rs;
@@ -178,8 +178,8 @@ public class BankController {
 	
 	public static Handler postClientAccount = ctx -> {
 		Client c1 = ctx.bodyAsClass(Client.class);
-		int client_id =Integer.parseInt(ctx.pathParam("client_id"));
-		service.postClientAccount(client_id, c1);
+		int real_id =Integer.parseInt(ctx.pathParam("real_id"));
+		service.postClientAccount(real_id, c1);
 		/*
 		try { 
 		PreparedStatement pstmt;
@@ -205,8 +205,8 @@ public class BankController {
 	
 	public static Handler updateClient = ctx -> {
 		Client c1 = ctx.bodyAsClass(Client.class);
-		int client_id = Integer.parseInt(ctx.pathParam("client_id"));
-		service.updateClient(client_id, c1);
+		int real_id = Integer.parseInt(ctx.pathParam("real_id"));
+		service.updateClient(real_id, c1);
 		/*
 		 int client_id = Integer.parseInt(ctx.pathParam("client_id"));
 		 
@@ -233,8 +233,8 @@ public class BankController {
 	};
 	public static Handler deleteOneClient = ctx -> {
 		Client c1 = ctx.bodyAsClass(Client.class);
-		int client_id = Integer.parseInt(ctx.pathParam("client_id"));
-		service.deleteOneClient(client_id);
+		int real_id = Integer.parseInt(ctx.pathParam("real_id"));
+		service.deleteOneClient(real_id);
 		
 		/*
 		PreparedStatement pstmt;

@@ -12,11 +12,11 @@ public interface BankServiceInt {
 	
 	Client postClient(Client c1);
 
-	Client updateClient(int client_id, Client c1);
+	Client updateClient(int real_id, Client c1);
 	
-	Client deleteOneClient(int client_id);
+	Client deleteOneClient(int real_id);
 	
-	Client postClientAccount(int client_id, Client c1);
+	Client postClientAccount(int real_id, Client c1);
 	
 	ArrayList<Client>getClientsAccount(int real_id);
 }

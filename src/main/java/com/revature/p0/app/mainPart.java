@@ -11,15 +11,15 @@ public class mainPart {
 		app.get("/", ctx->{ctx.result("Bank API");});
 		
 		app.get("/clients", BankController.getAllClients);
-		app.get("/clients/{client_id}", BankController.getOneClient);
+		app.get("/clients/{real_id}", BankController.getOneClient);
 		app.get("/clients/{real_id}/accounts", BankController.getClientsAccount);
 		
 		app.post("/clients", BankController.postClient);
-		app.post("/clients/{client_id}/accounts", BankController.postClientAccount);
+		app.post("/clients/{real_id}/accounts", BankController.postClientAccount);
 		
-		app.put("/clients/{client_id}", BankController.updateClient);
+		app.put("/clients/{real_id}", BankController.updateClient);
 		
-		app.delete("/clients/{client_id}", BankController.deleteOneClient);
+		app.delete("/clients/{real_id}", BankController.deleteOneClient);
 		
 	}
 

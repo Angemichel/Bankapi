@@ -55,7 +55,7 @@ public class BankDao implements BankDaoInt {
 		ResultSet rs;
 		Connection conn = Utils.createConnection();
 		//Client client = ctx.bodyAsClass(Client.class);
-		String selectOneClient = "select * from bank where client_id=?";
+		String selectOneClient = "select * from bank where real_id=?";
 		ArrayList<Client> cList = new ArrayList<Client>();
 		Client c;
 		try { 
@@ -64,7 +64,7 @@ public class BankDao implements BankDaoInt {
 			rs = pstmt.executeQuery();
 				
 				while(rs.next()) {
-					real_id= rs.getInt("client_id");
+					real_id= rs.getInt("real_id");
 					String name = rs.getString("Client_Name");
 					int account = rs.getInt("account_number");
 					int balance = rs.getInt("balance");
@@ -96,13 +96,14 @@ public class BankDao implements BankDaoInt {
 		Connection conn = Utils.createConnection();
 		
 		try { 
-			pstmt = conn.prepareStatement("insert into bank values(?,?,?,?,?)");
-			pstmt.setInt(1,c1.getId());
+			//pstmt = conn.prepareStatement("insert into bank values(?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into bank(client_id, client_name, account_number,balance, real_id) values(default,?,?,?,?)");
+			//pstmt.setInt(1,c1.getId());
 			//pstmt.setInt(1,100);
-			pstmt.setString(2, c1.getName());
-			pstmt.setInt(3, c1.getAccount());
-			pstmt.setInt(4, c1.getBalance());
-			pstmt.setInt(5,c1.getId());
+			pstmt.setString(1, c1.getName());
+			pstmt.setInt(2, c1.getAccount());
+			pstmt.setInt(3, c1.getBalance());
+			pstmt.setInt(4,c1.getId());			
 			pstmt.execute();
 			//ctx.status(201);
 			pstmt.close();
@@ -115,19 +116,19 @@ public class BankDao implements BankDaoInt {
 
 
 	@Override
-	public Client updateClient(int client_id, Client c1) {
+	public Client updateClient(int real_id, Client c1) {
 		// TODO Auto-generated method stub
 		Connection conn = Utils.createConnection();
 		
 		
 		try {
 			PreparedStatement pstmt;
-			pstmt = conn.prepareStatement("update bank set client_name=?, account_number=?,balance=?, real_id=? where client_id=?");
-			pstmt.setInt(5,client_id);
+			pstmt = conn.prepareStatement("update bank set client_name=?, account_number=?,balance=? where real_id=?");
+			//pstmt.setInt(5,real_id);
 			pstmt.setString(1, c1.getName());
 			pstmt.setInt(2, c1.getAccount());
 			pstmt.setInt(3, c1.getBalance());
-			pstmt.setInt(4,client_id);
+			pstmt.setInt(4,real_id);
 			
 			pstmt.execute();
 			pstmt.close();
@@ -140,15 +141,15 @@ public class BankDao implements BankDaoInt {
 	}
 
 	@Override
-	public Client deleteOneClient(int client_id) {
+	public Client deleteOneClient(int real_id) {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt;
 		Connection conn = Utils.createConnection();
 		
 		
 		try { 
-			pstmt = conn.prepareStatement("delete from bank where client_id=?");
-			pstmt.setInt(1,client_id);
+			pstmt = conn.prepareStatement("delete from bank where real_id=?");
+			pstmt.setInt(1,real_id);
 			pstmt.execute();
 			pstmt.close();
 			
@@ -161,7 +162,7 @@ public class BankDao implements BankDaoInt {
 	}
 
 	@Override
-	public Client postClientAccount(int client_id, Client c1) {
+	public Client postClientAccount(int real_id, Client c1) {
 		// TODO Auto-generated method stub
 		
 		
@@ -171,12 +172,18 @@ public class BankDao implements BankDaoInt {
 		
 		
 		try { 
-			pstmt = conn.prepareStatement("insert into bank values(?,?,?,?,?)");
-			pstmt.setInt(1,client_id);
-			pstmt.setString(2, c1.getName());
-			pstmt.setInt(3, c1.getAccount());
-			pstmt.setInt(4, c1.getBalance());
-			pstmt.setInt(5,client_id);
+			pstmt = conn.prepareStatement("insert into bank(client_id, client_name, account_number,balance, real_id) values(default,?,?,?,?)");
+			//pstmt.setInt(1,);
+			pstmt.setString(1, c1.getName());
+			pstmt.setInt(2, c1.getAccount());
+			pstmt.setInt(3, c1.getBalance());
+			pstmt.setInt(4,real_id);
+			/*
+			pstmt.setString(1, c1.getName());
+			pstmt.setInt(2, c1.getAccount());
+			pstmt.setInt(3, c1.getBalance());
+			pstmt.setInt(4,real_id);
+			*/
 			pstmt.execute();
 			//ctx.status(201);
 			pstmt.close();

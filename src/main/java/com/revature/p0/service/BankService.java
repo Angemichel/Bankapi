@@ -28,19 +28,19 @@ public class BankService implements BankServiceInt{
 	}
 	
 	@Override
-	public Client updateClient(int client_id, Client c1) {
+	public Client updateClient(int real_id, Client c1) {
 		// TODO Auto-generated method stub
-		return dao.updateClient(client_id, c1);
+		return dao.updateClient(real_id, c1);
 	}
 	@Override
-	public Client deleteOneClient(int client_id) {
+	public Client deleteOneClient(int real_id) {
 		// TODO Auto-generated method stub
-		return dao.deleteOneClient(client_id);
+		return dao.deleteOneClient(real_id);
 	}
 	@Override
-	public Client postClientAccount(int client_id, Client c1) {
+	public Client postClientAccount(int real_id, Client c1) {
 		// TODO Auto-generated method stub
-		return dao.postClientAccount(client_id, c1);
+		return dao.postClientAccount(real_id, c1);
 	}
 	
 	@Override
